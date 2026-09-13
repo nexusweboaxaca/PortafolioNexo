@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Nexus Inventory · Reportes DEMO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,6 +38,8 @@
             font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
         }
 
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
         .logo-text,
         .navbar a,
         .card-title,
@@ -57,9 +59,14 @@
         body {
             background: #12121F;
             min-height: 100vh;
+            min-height: 100dvh;
             padding: 20px;
             color: #ECF0F1;
+            width: 100%;
+            overflow-x: hidden;
         }
+
+        img, svg { max-width: 100%; }
 
         .server-bg {
             position: fixed;
@@ -154,6 +161,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            min-width: 0;
         }
 
         .logo-img {
@@ -194,6 +202,7 @@
         .logo-text {
             display: flex;
             flex-direction: column;
+            min-width: 0;
         }
 
         .logo-title {
@@ -490,7 +499,7 @@
             border: 1px solid rgba(0, 255, 148, 0.08);
             border-radius: 60px;
             color: #ECF0F1;
-            font-size: 13px;
+            font-size: 16px;
             outline: none;
             transition: var(--transition);
             font-family: 'Segoe UI', sans-serif;
@@ -563,6 +572,7 @@
             border: 1px solid rgba(0, 255, 148, 0.06);
             transition: 0.3s;
             text-align: center;
+            min-width: 0;
         }
 
         .summary-card:hover {
@@ -629,6 +639,7 @@
             padding: 22px 24px;
             border: 1px solid rgba(0, 255, 148, 0.06);
             transition: 0.3s;
+            min-width: 0;
         }
 
         .chart-card:hover {
@@ -728,6 +739,7 @@
             height: 160px;
             border-radius: 50%;
             position: relative;
+            flex-shrink: 0;
         }
 
         .donut-hole {
@@ -790,11 +802,13 @@
 
         .table-wrapper {
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 700px;
         }
 
         table thead {
@@ -811,6 +825,7 @@
             letter-spacing: 0.8px;
             font-family: 'Orbitron', sans-serif;
             border-bottom: 1px solid rgba(0, 255, 148, 0.06);
+            white-space: nowrap;
         }
 
         table tbody td {
@@ -839,6 +854,7 @@
             border-radius: 60px;
             font-size: 11px;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         .badge-tipo.entrada {
@@ -911,6 +927,8 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
+            left: 30px;
+            margin: 0 auto;
             z-index: 2000;
             padding: 16px 28px;
             border-radius: 12px;
@@ -921,6 +939,7 @@
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             max-width: 400px;
+            text-align: center;
         }
 
         .toast.show {
@@ -953,7 +972,7 @@
         }
 
         @media (max-width: 768px) {
-            .container { padding: 18px; }
+            .container { padding: 18px; border-radius: 24px; }
             .topbar { flex-wrap: wrap; gap: 12px; }
             .user-dropdown { width: 260px; right: -10px; }
             .navbar { border-radius: 24px; padding: 8px; }
@@ -963,7 +982,7 @@
             .summary-card .summary-value { font-size: 20px; }
             .filters-container { padding: 16px; }
             .filter-btn { font-size: 11px; padding: 6px 12px; }
-            .filter-date-group input[type="date"] { padding: 6px 10px; font-size: 12px; }
+            .filter-date-group input[type="date"] { padding: 6px 10px; font-size: 13px; }
             .charts-grid { grid-template-columns: 1fr; gap: 16px; }
             .donut-container { flex-direction: column; }
             table thead th, table tbody td { padding: 8px 12px; font-size: 12px; }
@@ -972,6 +991,7 @@
 
         /* Móviles */
         @media (max-width: 600px) {
+            body { padding: 10px; }
             .topbar { flex-direction: column; align-items: flex-start; }
             .user-menu { width: 100%; }
             .user-toggle { width: 100%; justify-content: space-between; }
@@ -981,6 +1001,15 @@
             .navbar { flex-direction: column; border-radius: 16px; align-items: stretch; }
             .navbar a { justify-content: flex-start; width: 100%; }
             .status-summary { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -1027,7 +1056,7 @@
       <a href="productos.html"><i class="fas fa-boxes"></i> Productos</a>
       <a href="movimientos.html"><i class="fas fa-history"></i> Movimientos</a>
       <a href="categorias.html"><i class="fas fa-tags"></i> Categorías</a>
-      <a href="reportes.html"><i class="fas fa-chart-bar"></i> Reportes</a>
+      <a href="reportes.html" class="active"><i class="fas fa-chart-bar"></i> Reportes</a>
     </nav>
 
         <!-- SECTION HEADER -->
@@ -1051,9 +1080,9 @@
                 <div id="fechaPersonalizado" style="display:none; align-items:center; gap:10px; flex-wrap:wrap;">
                     <div class="filter-date-group">
                         <label for="fecha_desde">Desde</label>
-                        <input type="date" id="fecha_desde" value="<?php echo date('Y-m-d', strtotime('-7 days')); ?>">
+                        <input type="date" id="fecha_desde">
                         <label for="fecha_hasta">Hasta</label>
-                        <input type="date" id="fecha_hasta" value="<?php echo date('Y-m-d'); ?>">
+                        <input type="date" id="fecha_hasta">
                     </div>
                     <button class="btn-filter" onclick="aplicarFiltroPersonalizado()">
                         <i class="fas fa-filter"></i> Filtrar
@@ -1255,11 +1284,23 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        // ===== FECHAS POR DEFECTO PARA EL FILTRO PERSONALIZADO =====
+        (function() {
+            const hoy = new Date();
+            const hace7 = new Date(hoy.getTime() - 7 * 24 * 60 * 60 * 1000);
+            const fmt = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+            document.getElementById('fecha_desde').value = fmt(hace7);
+            document.getElementById('fecha_hasta').value = fmt(hoy);
+        })();
+
         // ===== GENERAR FONDO =====
         (function() {
             const bg = document.getElementById('serverBg');
             const ledColors = ['', 'green', 'green-soft', 'neon-red'];
-            for (let i = 0; i < 50; i++) {
+            const isSmall = window.innerWidth <= 600;
+            const ledCount = isSmall ? 28 : 50;
+            const cableCount = isSmall ? 6 : 10;
+            for (let i = 0; i < ledCount; i++) {
                 const led = document.createElement('div');
                 led.className = 'led ' + ledColors[Math.floor(Math.random() * ledColors.length)];
                 led.style.left = Math.random() * 100 + '%';
@@ -1270,7 +1311,7 @@
                 led.style.animationDuration = (1.5 + Math.random() * 2) + 's';
                 bg.appendChild(led);
             }
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < cableCount; i++) {
                 const cable = document.createElement('div');
                 cable.className = 'cable ' + (['', 'green', 'neon-red'][Math.floor(Math.random() * 3)]);
                 cable.style.width = (60 + Math.random() * 120) + 'px';
@@ -1299,13 +1340,9 @@
 
         // ===== CAMBIAR PERÍODO (DEMO) =====
         function cambiarPeriodo(periodo) {
-            if (periodo === 'personalizado') {
-                togglePersonalizado();
-                return;
-            }
-            // Simular cambio de período (DEMO)
             document.querySelectorAll('.filter-group .filter-btn').forEach(b => b.classList.remove('active'));
             document.querySelector(`.filter-group .filter-btn[onclick*="${periodo}"]`).classList.add('active');
+            document.getElementById('fechaPersonalizado').style.display = 'none';
             showToast('Período cambiado a: ' + getPeriodoTexto(periodo) + ' (DEMO)', 'success');
         }
 
@@ -1354,35 +1391,51 @@
         function descargarReporte() {
             const fecha = new Date();
             const fechaStr = fecha.toISOString().split('T')[0];
-            const horaStr = fecha.toLocaleTimeString();
+            const fechaLegible = fecha.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const horaStr = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-            contenido += '                   NEXUS INVENTORY - REPORTE DEMO\n';
-            contenido += ' Fecha: ' + fecha.toLocaleDateString() + '\n';
+            let contenido = '';
+            contenido += '═══════════════════════════════════════════════════════════════\n';
+            contenido += '                 NEXUS INVENTORY - REPORTE DEMO\n';
+            contenido += '═══════════════════════════════════════════════════════════════\n\n';
+            contenido += ' Fecha: ' + fechaLegible + '\n';
             contenido += ' Hora: ' + horaStr + '\n';
             contenido += ' Usuario: DEMO (admin@sistema.com)\n';
             contenido += ' Período: Última Semana (DEMO)\n\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += ' RESUMEN GENERAL\n';
-            contenido += '  Total Productos      : 6\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
+            contenido += '  Total Productos      : 8\n';
             contenido += '  Stock Bajo           : 2\n';
             contenido += '  Valor Inventario     : $12,480\n';
             contenido += '  Movimientos Período  : 4\n';
             contenido += '  Categorías Activas   : 3\n\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += ' DISTRIBUCIÓN POR CATEGORÍA\n';
-            contenido += '  Electrónica          : 3 productos (50%)\n';
-            contenido += '  Accesorios           : 2 productos (33%)\n';
-            contenido += '  Software             : 1 productos (17%)\n\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
+            contenido += '  Electrónica          : 4 productos (50%)\n';
+            contenido += '  Accesorios           : 2 productos (25%)\n';
+            contenido += '  Software             : 2 productos (25%)\n\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += ' MOVIMIENTOS RECIENTES\n';
-            contenido += '  Fecha     | Producto              | Tipo   | Cantidad\n';
-            contenido += '  ----------|-----------------------|--------|----------\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
+            contenido += '  Fecha     | Producto              | Tipo    | Cantidad\n';
+            contenido += '  ----------|-----------------------|---------|----------\n';
             contenido += '  10/03/26  | Laptop Dell XPS 13    | Entrada | +5\n';
             contenido += '  10/03/26  | Monitor Samsung 27"   | Salida  | -2\n';
             contenido += '  09/03/26  | Teclado Mecánico RGB  | Entrada | +10\n';
             contenido += '  08/03/26  | Mouse Logitech MX     | Ajuste  | =5\n\n';
-            
+            contenido += '───────────────────────────────────────────────────────────────\n';
+            contenido += ' REPORTE GENERADO POR NEXUS INVENTORY\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
+            contenido += '  Versión demo - Funcionalidades limitadas\n';
+            contenido += '  © 2026 Nexus Webs - Todos los derechos reservados.\n';
+            contenido += '═══════════════════════════════════════════════════════════════\n';
+
             const blob = new Blob([contenido], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'reporte_nexus_' + fechaStr + '.txt';
+            link.download = 'reporte_nexus_inventory_' + fechaStr + '.txt';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
