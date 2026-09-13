@@ -517,32 +517,43 @@
             }, 4000);
         }
         
+        // ===== GENERAR REPORTE EN BLOC DE NOTAS =====
         function generarReporte() {
             const fecha = new Date();
             const fechaStr = fecha.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const horaStr = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
+            let contenido = '';
+            contenido += '═══════════════════════════════════════════════════════════════\n';
             contenido += '                   NEXUS AGENDA - REPORTE DE ESTADÍSTICAS\n';
+            contenido += '═══════════════════════════════════════════════════════════════\n\n';
             contenido += 'Fecha: ' + fechaStr + '\n';
             contenido += 'Hora: ' + horaStr + '\n';
             contenido += 'Usuario: Usuario DEMO\n';
             contenido += 'Correo: nexus@sistema.com\n\n';
-            
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += 'RESUMEN GENERAL\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += '  Total de citas        : 8\n';
             contenido += '  Ingresos totales      : $280,000\n';
             contenido += '  Servicios activos     : 3\n';
             contenido += '  Clientes registrados  : 4\n\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += 'ESTADO DE CITAS\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += '  Pendientes   : 2\n';
             contenido += '  Confirmadas  : 3\n';
             contenido += '  Realizadas   : 2\n';
             contenido += '  Canceladas   : 1\n\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += 'SERVICIOS MÁS SOLICITADOS\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += '  #1 Corte de cabello   5 citas   $175,000\n';
             contenido += '  #2 Manicura           3 citas   $135,000\n';
             contenido += '  #3 Depilación         1 cita    $28,000\n\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += 'CITAS POR DÍA (ÚLTIMOS 7 DÍAS)\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
             contenido += '  Lun  ████████████ 5\n';
             contenido += '  Mar  ████████ 3\n';
             contenido += '  Mié  ██████████ 4\n';
@@ -550,6 +561,12 @@
             contenido += '  Vie  ███████████████ 6\n';
             contenido += '  Sáb  ██ 1\n';
             contenido += '  Dom  █ 0\n\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
+            contenido += 'REPORTE GENERADO POR NEXUS AGENDA\n';
+            contenido += '───────────────────────────────────────────────────────────────\n';
+            contenido += '  Versión demo - Funcionalidades limitadas\n';
+            contenido += '  © 2026 Nexus Webs - Todos los derechos reservados.\n';
+            contenido += '═══════════════════════════════════════════════════════════════\n';
 
             const blob = new Blob([contenido], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
